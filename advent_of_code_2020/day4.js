@@ -49,14 +49,14 @@ const file  = fs.readFileSync("./inputDay4.txt").toString();
 const passports = file.split(/\n\n/g)
 
 let validPassports = 0
-const validFields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]
+const validFields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
 passports.forEach(passport => {
     const fields = passport.replace(/\n/g, " ").split(" ")
     const arrKeys = fields.map(field => {return field.split(":")[0]})
 
     for(const field of validFields){
-        if(!arrKeys.includes(field) && field !== "cid") return
+        if(!arrKeys.includes(field)) return
     }
 
     validPassports++
@@ -153,17 +153,14 @@ passports.forEach(passport => {
     })
 
     for(const field of validFields){
-        if(!Object.keys(obj).includes(field) && field !== "cid"){
+        if(!Object.keys(obj).includes(field)){
             return
         }else{
-            if(field !== "cid"){
-                if(!rules[field].test(obj[field])) return
-            }
+            if(!rules[field].test(obj[field])) return
         }
     }
 
     validPassports++
 })
-
 
 console.log(`There are ${validPassports} valid passports. - Part Two`)
