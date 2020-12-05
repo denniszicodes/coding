@@ -132,13 +132,13 @@ Count the number of valid passports - those that have all required fields and va
 */
 
 const rules = {
-    "byr":"^(19[2-9][0-9]|200[0-2])$", 
-    "iyr":"^(201[0-9]|2020)$", 
-    "eyr":"^(202[0-9]|2030)$", 
-    "hgt":"^((1[5-8][0-9]|19[0-3])cm|(59|6[0-9]|7[0-6])in)$", 
-    "hcl":"^#[0-9a-z]{6}$", 
-    "ecl":"^(amb|blu|brn|gry|grn|hzl|oth)$", 
-    "pid":"^[0-9]{9}$"
+    byr:/^(19[2-9][0-9]|200[0-2])$/, 
+    iyr:/^(201[0-9]|2020)$/, 
+    eyr:/^(202[0-9]|2030)$/, 
+    hgt:/^((1[5-8][0-9]|19[0-3])cm|(59|6[0-9]|7[0-6])in)$/, 
+    hcl:/^#[0-9a-z]{6}$/, 
+    ecl:/^(amb|blu|brn|gry|grn|hzl|oth)$/, 
+    pid:/^[0-9]{9}$/
 }
 
 validPassports = 0
@@ -148,8 +148,8 @@ passports.forEach(passport => {
     let obj = {}
 
     fields.forEach(field => {
-        const splitFieldArr = field.split(":")
-        obj[splitFieldArr[0]] = splitFieldArr[1]
+        const [key, item] = field.split(":")
+        obj[key] = item
     })
 
     for(const field of validFields){
@@ -157,8 +157,7 @@ passports.forEach(passport => {
             return
         }else{
             if(field !== "cid"){
-                let re = new RegExp(rules[field])
-                if(!re.test(obj[field])) return
+                if(!rules[field].test(obj[field])) return
             }
         }
     }
