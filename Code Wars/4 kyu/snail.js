@@ -19,7 +19,7 @@
 
 function snail(arr) {
   if (arr[0].length === 0) return [];
-  let way = [];
+  const way = [];
   while (arr.length > 0) {
     if (arr.length >= 1) way.push(...arr.shift());
     for (let i = 0; i < arr.length - 1; i++) {
